@@ -319,14 +319,12 @@ void Check_Active(const char* input, const char* output)
     printf("\33[2K\rScanning [✓] Complete! %d/%d channels processed.\n", processed, total_channels);
     clock_t end_time = clock();
     double elapsed_sec = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-    printf("\nScan completed in: \033[1;36m%.2f\033[0m seconds.\n", elapsed_sec);
 
     // Calculate elapsed time in hours, minutes, seconds
     int elapsed_sec_int = (int)elapsed_sec;
     int hours = elapsed_sec_int / 3600;
     int minutes = (elapsed_sec_int % 3600) / 60;
     int seconds = elapsed_sec_int % 60;
-    printf("Elapsed time: %02d:%02d:%02d (hh:mm:ss)\n", hours, minutes, seconds);
 
     // Print summary table
     printf("+------+----------------------------------------+----------------------+------------+\n");
