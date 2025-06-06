@@ -1,69 +1,119 @@
+
+---
+
 # Check Online for IPTV (Using Standard C)
 
-Scanning and sorting the IPTV list available in your region (Windows users only)
+**Experience efficient IPTV scanning and sorting for your region (Windows users only).**
 
-# Table of Contents
-- [WARNING BEFORE USE](#warning-before-use)
-- [How Does It Work?](#how-does-it-work)
-- [Questions](#questions)
-
----
-
-## WARNING BEFORE USE
-
-This code is built by a student, so its efficiency is not as good as other tools, but the results are acceptable for users to enjoy IPTV.
-
-This code is intended for Windows users only (because it uses the Command Prompt).
-
-The input file should include the Channel Name (after the last comma) and the Resolution or Quality (between the last "(" and ")" if available).
-
-The output will contain only the Channel Name, URL, and, if available, the Resolution or Quality.
+## Table of Contents
+- [Warning Before Use](#warning-before-use)
+- [How It Works](#how-it-works)
+- [Optional Features](#optional-features)
+- [Frequently Asked Questions](#frequently-asked-questions)
+- [Demo & UI Preview](#demo--ui-preview)
 
 ---
 
-## How Does It Work?
+## Warning Before Use
 
-1. **Check Internet Access:** Verify that the user has an active internet connection.
-2. **Open the File:** Open the input file.
-3. **Count Channels:** Determine how many channels are listed in `input.txt`.
-4. **URL Search:** Begin checking each URL.
-5. **Curl Check:** Run CMD with the `curl` command to check if the URL responds within 15 seconds. If it does, the URL is marked as **ACTIVE**; if not, it is considered **INACTIVE/TIMEOUT**.
-6. **Save Information:** Record the information for each channel to display a scan summary.
-7. **Write Output:** Write all **ACTIVE** channels to `output.m3u`.
+Please note that this tool is a student project. While it may not match the efficiency of some professional-grade solutions, it delivers acceptable performance for enjoying IPTV. Designed exclusively for Windows, it leverages Command Prompt functionality.
 
----
+**Input File Requirements:**
+- **Channel Name:** Located after the final comma.
+- **Resolution/Quality (Optional):** Any details enclosed between the last pair of parentheses `()`.
 
-### OPTIONAL
-
-1. Prompt the user to open the output file in VLC once the scanning process is finished.
-2. Calculate the total duration of the process.
-3. Display a progress bar during processing.
-4. Allow the user to change the response timeout from 15 seconds to a maximum of 30 seconds.
+**Output:**
+- The generated `output.m3u` file will include only the Channel Name, URL, and, when available, the Resolution or Quality.
 
 ---
 
-## Questions
+## How It Works
 
-**Q: What are the conditions for a channel to be considered active or inactive?**  
-**A:** A channel is considered active if the response code is in the 2XX or 3XX range, or if it prompts for a download.
+1. **Internet Connectivity Check:**  
+   The tool first verifies that an active internet connection is available, continuously scanning every second until connectivity is confirmed.
 
-**Q: Is much of the code unnecessary?**  
-**A:** Yes, a lot of it is superfluous; it primarily exists to enhance the user interface and provide additional information.
+2. **File Handling:**  
+   It opens the designated input file and counts the number of IPTV channels listed.
 
-**Q: Where can I get the IPTV list?**  
-**A:** If you're new, the IPTV list available at [https://github.com/iptv-org/iptv](https://github.com/iptv-org/iptv) is recommended.
+3. **URL Scanning:**  
+   The program examines each channel’s URL to determine its status.
+
+4. **Curl Command Verification:**  
+   By executing the `curl` command through CMD, each URL is given up to 15 seconds to respond. URLs returning a 2XX/3XX response or prompting a download are marked as **ACTIVE**; all others are designated as **INACTIVE/TIMEOUT**.
+
+5. **Result Recording:**  
+   Information for each channel is compiled to present a comprehensive scanning summary.
+
+6. **Output Generation:**  
+   Only channels confirmed as active are exported to the final `output.m3u` file.
+
+7. **Duplicate Filtering:**  
+   If duplicate channels (based on the same URL) are detected, the tool removes redundant entries, keeping only the channel with the most complete information.
 
 ---
 
-## Test Run
-**Input is Japanese IPTV (6/6/2025) from iptv-org**
+## Optional Features
 
-*UI Processing*
-![image](https://github.com/user-attachments/assets/03086949-8bea-478f-b72e-6d4a098de755)
+- **VLC Launch:**  
+  Prompt the user to automatically launch the output file in VLC media player upon completion.
 
-*Scan summary result + Time processing*
-![image](https://github.com/user-attachments/assets/1819ffc1-55bb-4fa0-a2b0-338ea5ac90f5)
+- **Processing Duration:**  
+  Calculate and display the total time taken to complete the scan.
 
-*(Optional) Open VLC*
-![image](https://github.com/user-attachments/assets/a35145b8-f9f0-4370-b5b0-27f07ed29a71)
+- **Visual Progress Indicator:**  
+  A dynamic progress bar enhances the processing experience.
 
+- **Customizable Timeout:**  
+  Users can adjust the response timeout threshold (up to a maximum of 30 seconds) if needed.
+
+---
+
+## Frequently Asked Questions
+
+**Q: What improvements have been made from version 1.0 to 1.1?**  
+**A:**  
+- **Enhanced Connectivity:** The tool now monitors for an active internet connection every second.  
+- **Duplicate Removal:** It actively filters out channels with duplicate URLs to streamline the list.  
+- **Improved UI:** Significant upgrades have been made to the user interface for a cleaner, more engaging experience.
+
+**Q: How is a channel classified as active or inactive?**  
+**A:**  
+A channel is considered active if it responds with a 2XX/3XX response or prompts a download when tested via the `curl` command. Otherwise, it is marked as inactive or timed out.
+
+**Q: Is all the code essential?**  
+**A:**  
+While some parts of the code primarily enhance the UI and provide additional information, they collectively contribute to a more robust and user-friendly experience.
+
+**Q: Where can I obtain the IPTV list?**  
+**A:**  
+If you're new to this, an excellent starting point is the [IPTV-org repository on GitHub](https://github.com/iptv-org/iptv).
+
+---
+
+## Demo & UI Preview
+
+Below are some preview screenshots demonstrating the tool in action:
+
+- **User Interface During Processing:**
+  ![image](https://github.com/user-attachments/assets/f975af81-0905-4c7f-a4ef-4d5643ebb3cb)
+  *No Internet Connection*
+
+  ![image](https://github.com/user-attachments/assets/544d36c1-e48b-4619-b871-4afc7a7ad85c)
+  *Scanning process + Internet Speed Measurement*
+
+
+- **Scan Summary & Processing Time:**  
+  ![image](https://github.com/user-attachments/assets/4d3e856d-4f11-40cf-946e-1b426e855b29)
+  ![image](https://github.com/user-attachments/assets/a2c9bfc6-b7ba-43c8-8519-7ee2f2693ca8)
+
+
+- **VLC Launch Prompt:**  
+  ![image](https://github.com/user-attachments/assets/9be94a7d-379d-4310-9fdd-07866636b897)
+
+
+---
+
+<div align="center">
+  <strong>Developed by ShouNLAK</strong><br>
+  If you have any questions, feel free to ask.
+</div>
