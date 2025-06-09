@@ -1,5 +1,4 @@
 # Online IPTV Channel Scanner – Update 1.2 (C17 Standard)
-> Version **1.2** is set to release at **10/06/2025 - 12:00 AM**. This update introduces a host of improvements that enhance performance and user experience across the board. Our release encompasses several key feature enhancements, as detailed below.
 
 **A powerful IPTV channel scanner built in Standard C for Windows. Now featuring advanced connectivity checks, smart quality selection, geo-block detection, auto-redirect optimization, intelligent duplicate filtering, and an enhanced UI with dynamic progress and ETA indicators.**
 
