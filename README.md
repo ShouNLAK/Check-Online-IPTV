@@ -1,5 +1,5 @@
 
-# Online IPTV Channel Scanner (Standard C) - Windows only
+# Online IPTV Channel Scanner (Standard C) - Windows
 
 **A powerful IPTV channel scanner built in Standard C for Windows.**  
 This project validates IPTV channel lists by testing stream URLs, measuring network performance, and filtering out inactive or duplicate channels—all while delivering a visually appealing, dynamic user interface.
