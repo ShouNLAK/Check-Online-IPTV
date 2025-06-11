@@ -1,15 +1,19 @@
-# Online IPTV Channel Scanner – Update 1.2 (C17 Standard)
 
-**A powerful IPTV channel scanner built in Standard C for Windows. Now featuring advanced connectivity checks, smart quality selection, geo-block detection, auto-redirect optimization, intelligent duplicate filtering, and an enhanced UI with dynamic progress and ETA indicators.**
+# Online IPTV Channel Scanner (Standard C) - Windows only
+
+**A powerful IPTV channel scanner built in Standard C for Windows.**  
+This project validates IPTV channel lists by testing stream URLs, measuring network performance, and filtering out inactive or duplicate channels—all while delivering a visually appealing, dynamic user interface.
+
+> **Latest : Version 1.2.0 | Release on 10/06/2025** 
 
 ---
 
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [Warning & Prerequisites](#warning--prerequisites)
+- [Prerequisites](#prerequisites)
 - [How It Works](#how-it-works)
-- [New & Enhanced Features](#new--enhanced-features)
+- [Features](#features)
 - [Optional Features](#optional-features)
 - [Frequently Asked Questions](#frequently-asked-questions)
 - [Demo & UI Preview](#demo--ui-preview)
@@ -19,203 +23,135 @@
 
 ## Introduction
 
-This tool scans IPTV channel lists by verifying and testing URLs, measuring your internet speed, and filtering out inactive or duplicate entries—all while providing an engaging user experience. Update 1.2 (C17 Standard) introduces comprehensive improvements such as geo-restriction detection (via country code lookup), smart quality selection with automated resolution retrieval, an auto-redirect mechanism, duplicate filtering with high-quality preference, and a dynamic UI with real-time progress and ETA indicators. Active channels are exported into an optimized M3U playlist ready for immediate use (e.g., with VLC).
+The Online IPTV Channel Scanner is a student-developed tool designed to help you quickly verify and optimize IPTV channel lists. It processes an M3U playlist by performing several key tasks:
+- Verifying the connectivity and measuring internet speed.
+- Parsing channel information from the playlist.
+- Testing each channel URL (following redirects to the best quality stream when necessary).
+- Converting raw resolution data into clear, user-friendly labels.
+- Automatically filtering out duplicate or inactive channels.
+- Presenting a polished, colorized user interface with real-time progress updates and estimated time remaining (ETA).
+
+After scanning, only active channels are compiled into a clean "output.m3u" playlist—ready for immediate use with media players like VLC.
 
 ---
 
-## Warning & Prerequisites
+## Prerequisites
 
-- **Platform:**  
-  Built exclusively for Windows, this tool leverages Command Prompt utilities (using `curl`, `findstr`, and Windows-specific sleep functions) to execute its tasks.
-  
+- **Operating System:** Windows 10 or later
+- **Required Tools:**  
+  - `curl` (used for HTTP requests, speed tests, and URL redirection handling)
+  - `ping` (for checking internet connectivity)
+  - An M3U file named `input.txt` (formatted as described below)
+  - **Optional:** VLC Media Player – to automatically launch the output playlist
+
 - **Input File Format:**  
-  - **Channel Name:** Extracted from the content following the final comma in each `#EXTINF` line.  
-  - **Resolution/Quality (Optional):** If provided, this information should be enclosed within the last pair of parentheses `()`.
-  
-- **Output File:**  
-  The scanner produces an `output.m3u` file that contains only active channels—with the direct best-quality URL and any available resolution/quality details.
-
-- **Disclaimer:**  
-  This project is a student endeavor. Although fully functional, it may not match the efficiency of professional-grade IPTV tools. Use it for educational and personal projects only.
+  Each channel block in your `input.txt` should follow this structure:
+  ```m3u
+  #EXTM3U
+  #EXTINF:-1,Channel Name (HD)
+  https://stream.example.com/…
+  ```
+  The channel name is extracted from the text following the final comma, and any resolution or quality information (if available) should be enclosed in the last pair of parentheses.
 
 ---
 
 ## How It Works
 
 1. **Connectivity & Internet Speed Testing:**  
-   - **Speed Test:** Before beginning the channel scan, the tool downloads a 1 MB file using `curl` to measure your download speed in Mbps.  
-   - **Geo-Detection:** Your country code is retrieved through an IP lookup, assisting in the identification of geo-restricted channels that might otherwise be blocked in your region.
-   
-2. **Input File Processing:**  
-   The input file (typically `input.txt`) is parsed to count and extract channel entries. Each entry comprises an `#EXTINF` line for metadata—where the channel name and (optional) resolution are derived—and a URL line.
+   Before scanning begins, the tool pings `google.com` to ensure an active internet connection. It then downloads a 1 MB file using `curl` to estimate your download speed in Mbps. An IP lookup is also performed to detect your country code, which can help diagnose geo-restriction issues.
 
-3. **URL Scanning, Auto-Redirect & Retry Mechanism:**  
-   - **HTTP Status Check:** For each channel, the scanner issues a `curl` command to check the URL’s HTTP status. A response in the 2XX/3XX range marks the channel as **ACTIVE**.  
-   - **Auto-Redirect:** If a URL returns a redirection (HTTP 302), the tool automatically scans the header for the new location and updates the URL to point to the best quality stream.  
-   - **Retry on Failure:** Should a channel fail due to a poor connection, the system triggers a retry mechanism before finalizing its status.
-   
+2. **Input File Processing:**  
+   The scanner opens “input.txt”, skips the header line, and counts each channel entry marked by the `#EXTINF` tag. It then processes each entry to extract the channel’s name and any optional resolution or quality details, followed by its corresponding URL.
+
+3. **URL Scanning & Auto-Redirect Handling:**  
+   For every URL that begins with “http://” or “https://”, the tool issues a `curl` command with a fixed timeout to test HTTP status.  
+   - If the URL returns a 2XX/3XX response or a downloadable attachment header, the channel is marked as **active**.  
+   - When a channel URL responds with an HTTP 302 (redirection), the tool automatically retrieves the new URL to point to the best quality stream—ensuring that delays due to redirects are minimized.
+   - In cases of poor connectivity, the tool employs a retry mechanism to improve accuracy.
+
 4. **Resolution Conversion & Duplicate Filtering:**  
-   - **Resolution Conversion & Quality Retrieval:**  
-     - **Version 1.1:** Previously, the tool could only convert resolution strings provided manually in the channel name (e.g., "Channel Name (720x480)" converting to "480p").  
-     - **Version 1.2:** The scanner now queries each channel's URL directly to detect the best available quality. Raw resolution values (e.g., "720x480") are retrieved and automatically converted into user-friendly labels (like "480p"). This approach removes the need for manually inputting resolution details, ensuring that the displayed quality is both accurate and up-to-date.
-     
-   - **Duplicate Handling:** Duplicates are detected based on identical URLs. If duplicates exist, the scanner compares available quality details and retains the entry with the highest available stream.
+   The scanner dynamically retrieves raw resolution data (for example, "720x480") from channel responses and converts it into standard labels such as "480p," "1080p," or "2160p – 4K."  
+   It then examines channels with identical URLs and intelligently filters out duplicates—retaining only the entry with the highest quality or most complete resolution information.
 
 5. **Real-Time Progress & ETA Indicators:**  
-   A dynamic progress bar with a spinner, current channel count, and estimated time remaining (ETA) provide continuous feedback during the scan.
+   Throughout the scan, the UI displays a dynamic progress bar with a spinner, current channel count, and an estimated time remaining, all rendered in vibrant colors for clarity.
 
-6. **Output Compilation:**  
-   Only channels verified as active—and filtered to include the best quality version in case of duplicates—are written into the final `output.m3u` file.
-
-7. **Optional Cleanup & Launch:**  
-   After processing, additional optional features allow the user to launch the output file in VLC immediately and view a final summary of the scan.
+6. **Output Compilation & Optional VLC Launch:**  
+   Only channels verified as active are written to “output.m3u” with clean metadata including resolution labels. Upon completion, the tool offers an optional prompt to immediately open the playlist in VLC Media Player.
 
 ---
 
-## New & Enhanced Features
+## Features
 
-- **Internet Speed & Geo-Detection:**  
-  - Measures your download speed to help diagnose network performance.  
-  - Retrieves and displays your country code to help identify geo-restricted channels.
+- **Advanced Connectivity & Speed Testing:**  
+  Verifies internet access, measures download speed, and performs geo-detection to help pinpoint potential geo-restriction issues.
 
-- **Smart Quality Selection, Auto-Redirect & Resolution Conversion:**  
-  - Automatically chooses the best quality available for each channel by querying the channel’s URL directly.  
-  - Redirects provider URLs to the direct best-quality stream and retries connections automatically if the initial attempt fails.  
-  - Converts raw resolution values into standardized, user-friendly labels (e.g., "720x480" becomes "480p"), even if the input lacks manual resolution metadata.
+- **Smart URL Scanning with Auto-Redirect:**  
+  Automatically follows HTTP 302 redirects to retrieve the best available stream quality while minimizing delay.
 
-- **Duplicate Filtering:**  
-  Ensures that duplicate channels (determined by identical URLs) are consolidated by retaining the entry with the most complete or highest quality information.
+- **Dynamic Resolution Conversion:**  
+  Converts raw resolution data into standardized, user-friendly labels for clarity in the final playlist.
 
-- **Enhanced User Interface & ETA Calculation:**  
-  - A modern UI featuring dynamic progress indicators, spinners, and real-time ETA estimates.  
-  - Detailed scan summaries display totals for active, inactive, and timed-out channels.
+- **Intelligent Duplicate Filtering:**  
+  Consolidates duplicate channel entries by evaluating quality details to retain only the optimal stream.
+
+- **Enhanced User Interface:**  
+  Offers a vivid, colorized display with real-time progress bars, countdown timers, ETA estimates, and detailed status messages for a polished scanning experience.
 
 ---
 
 ## Optional Features
 
 - **VLC Launch Prompt:**  
-  Once scanning is complete, the tool offers the option to immediately launch the generated `output.m3u` playlist in VLC Media Player.
+  At the end of the scan, an optional prompt allows you to automatically open the optimized “output.m3u” playlist in VLC Media Player.
 
-- **Customizable Timeout Configuration:**  
-  You can adjust the response timeout for each URL (up to a maximum of 30 seconds) according to your network conditions.
+- **Customizable Timeout Settings:**  
+  The response timeout for each URL can be adjusted (up to a maximum of 30 seconds) to suit your network conditions.
 
-- **Detailed Performance Metrics:**  
-  Displays overall processing time alongside a comprehensive breakdown of channel statuses.
+- **Performance Metrics:**  
+  Displays overall processing time along with a comprehensive summary of active, inactive, and timed-out channels.
 
 ---
 
 ## Frequently Asked Questions
 
-### Version Comparison
+**Q: Can I change the file names for input and output?**  
+A: In the current version, the scanner always reads from `input.txt` and writes to `output.m3u`. You can modify these within the source code if needed.
 
-<table style="border-collapse: collapse; width: 100%; font-family: Arial, sans-serif;">
-  <thead>
-    <tr>
-      <th style="background-color: #4CAF50; color: white; text-align: center; padding: 8px;">Feature</th>
-      <th style="background-color: #4CAF50; color: white; text-align: center; padding: 8px;">Version 1.0</th>
-      <th style="background-color: #4CAF50; color: white; text-align: center; padding: 8px;">Version 1.1</th>
-      <th style="background-color: #4CAF50; color: white; text-align: center; padding: 8px;">Version 1.2</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="padding: 8px;"><strong>Initial URL Check</strong></td>
-      <td style="padding: 8px;">Basic HTTP check</td>
-      <td style="padding: 8px;">Added redirection handling</td>
-      <td style="padding: 8px;">Auto-redirect to best-quality URLs</td>
-    </tr>
-    <tr>
-      <td style="padding: 8px;"><strong>Retry Mechanism</strong></td>
-      <td style="padding: 8px;">None</td>
-      <td style="padding: 8px;">Minimal retry on failure</td>
-      <td style="padding: 8px;">Automatic retry on poor connections</td>
-    </tr>
-    <tr>
-      <td style="padding: 8px;"><strong>Duplicate Filtering</strong></td>
-      <td style="padding: 8px;">Not available</td>
-      <td style="padding: 8px;">Basic duplicate removal</td>
-      <td style="padding: 8px;">Intelligent duplicate filtering with quality check</td>
-    </tr>
-    <tr>
-      <td style="padding: 8px;"><strong>Internet Connectivity Check</strong></td>
-      <td style="padding: 8px;">Single check at start</td>
-      <td style="padding: 8px;">Improved connectivity re-check (1 sec)</td>
-      <td style="padding: 8px;">Continuous connectivity &amp; speed test + geo-detection</td>
-    </tr>
-    <tr>
-      <td style="padding: 8px;"><strong>Resolution Conversion</strong></td>
-      <td style="padding: 8px;">Not present</td>
-      <td style="padding: 8px;">Converts manually entered resolution info</td>
-      <td style="padding: 8px;">Dynamically retrieves and converts best-quality resolution from URL</td>
-    </tr>
-    <tr>
-      <td style="padding: 8px;"><strong>UI &amp; ETA</strong></td>
-      <td style="padding: 8px;">Basic output</td>
-      <td style="padding: 8px;">Enhanced progress reporting</td>
-      <td style="padding: 8px;">Advanced UI with dynamic progress bar, spinner, &amp; ETA</td>
-    </tr>
-    <tr>
-      <td style="padding: 8px;"><strong>VLC Launch Option</strong></td>
-      <td style="padding: 8px;">Not available</td>
-      <td style="padding: 8px;">Basic prompt</td>
-      <td style="padding: 8px;">Integrated prompt to launch VLC automatically</td>
-    </tr>
-  </tbody>
-</table>
+**Q: How does the auto-redirect mechanism work?**  
+A: When encountering an HTTP 302 status code, the scanner automatically retrieves the “Location:” header and updates the URL to point to the direct stream, improving both speed and accuracy.
 
-### Additional Q&A
+**Q: What if my internet connection is poor?**  
+A: The tool first checks connectivity and measures your download speed. If a poor connection is detected, it will retry URL checks before marking a channel as inactive.
 
-**Q: What improvements do I see in Update 1.2?**  
-**A:**  
-- The tool now retries channel tests if a poor connection causes an initial failure.  
-- It auto-redirects from provider URLs to direct best-quality streams and fetches the best resolution data in real time—converting raw resolution values like "720x480" to "480p".  
-- The UI now provides detailed progress indicators and ETA estimates, offering a smoother and more informative scanning experience.
+**Q: How is duplicate filtering handled?**  
+A: After scanning, duplicate channels (those with identical URLs) are compared based on available quality and resolution data; only the highest quality entry is retained in the final playlist.
 
-**Q: How does the duplicate filtering work?**  
-**A:**  
-Duplicates are detected by comparing channel URLs. When duplicates are found, the tool compares available quality information and retains only the entry with the highest stream quality, ensuring a cleaner final playlist.
-
-**Q: What measures are taken for geo-blocked channels?**  
-**A:**  
-The tool performs an IP lookup to retrieve your country code. This is displayed during the scanning process to help you identify and troubleshoot potential geo-restriction issues.
-
-**Q: How is a channel evaluated as active?**  
-**A:**  
-Each channel’s URL is tested with `curl`. A channel is marked as active if it returns a valid HTTP 2XX/3XX status code or triggers a download. Channels that fail are retried before being marked inactive or timed out.
-
-**Q: Where can I download an IPTV channel list for testing?**  
-**A:**  
-A good starting point is the [IPTV-org repository on GitHub](https://github.com/iptv-org/iptv), which offers an extensive collection of channel lists.
-
-**Q: What if I encounter issues or have suggestions for improvements?**  
-**A:**  
-Feel free to post issues or submit pull requests on the GitHub repository. Contributions and constructive feedback are highly appreciated as this is a continually evolving project.
+**Q: Where can I use the generated playlist?**  
+A: The final `output.m3u` file is compatible with popular media players like VLC, Kodi, and Plex, making it easy to enjoy your verified channels immediately.
 
 ---
 
 ## Demo & UI Preview
 
-Below are example screenshots that highlight the tool’s new features and enhanced UI:
+Below are example screenshots that illustrate the tool’s modern, dynamic interface:
 
-- **Internet Speed & Geo-Detection:**  
-  ![No Internet Connection](https://github.com/user-attachments/assets/f975af81-0905-4c7f-a4ef-4d5643ebb3cb)
+- **Dynamic Progress & Countdown:**  
+  A vibrant progress bar with a spinner and real-time countdown helps you follow the scanning process.
 
-- **Scanning Process & Speed Test:**  
-  ![Scanning Progress](https://github.com/user-attachments/assets/544d36c1-e48b-4619-b871-4afc7a7ad85c)
-
-- **Scan Summary with ETA & Conversion of Resolution:**  
-  ![Scan Summary](https://github.com/user-attachments/assets/4d3e856d-4f11-40cf-946e-1b426e855b29)  
-  ![Processing Time](https://github.com/user-attachments/assets/a2c9bfc6-b7ba-43c8-8519-7ee2f2693ca8)
+- **Scan Summary:**  
+  An organized, colorized table shows the status of each channel, including active, inactive, and timed-out entries, along with resolution details.
 
 - **VLC Launch Prompt:**  
-  ![VLC Launch](https://github.com/user-attachments/assets/9be94a7d-379d-4310-9fdd-07866636b897)
+  After scanning, a clear prompt allows you to automatically open the optimized playlist in VLC Media Player.
+
+> *Note: New release has been confirmed, the media will be updated as soon as possible, right after the release*
 
 ---
 
 ## License & Credits
 
 Developed by **ShouNLAK**  
-This tool is provided as-is for educational and personal use. Contributions, suggestions, and improvements are welcome via GitHub issues or pull requests.
+This tool is provided as-is for educational and personal use.
 
----
+Contributions, suggestions, and improvements are welcome via GitHub issues or pull requests.
