@@ -1,5 +1,0 @@
-//User will input their IPTV text here
-//For example :
-#EXTM3U
-#EXTINF: -1, <Channel Name> (<Resolution> or <Quality>)
-<URL for Channel Name's IPTV>
