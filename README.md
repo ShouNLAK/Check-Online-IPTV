@@ -3,7 +3,7 @@
 **An advanced IPTV scanner built in Standard C for Windows.**  
 This release verifies each stream URL in an M3U playlist, measures internet speed with country lookup, auto-redirects channels to their best quality stream, displays a colorized UI with timestamps and countdowns, and automatically removes duplicate channels with enhanced resolution conversion.
 
-> The code is available in the **Version** folder | Released on 10/06/2025
+> Released on 10/06/2025
 
 ---
 
