@@ -12,6 +12,7 @@
 <li><a href="#optional-features--enhancements">Optional Features &amp; Enhancements</a></li>
 <li><a href="#upgrade-instructions">Upgrade Instructions</a></li>
 <li><a href="#research-edition-file-structure">Research Edition File Structure</a></li>
+<li><a href="#clone-from-github">Clone from GitHub</a></li>
 <li><a href="#license--credits">License &amp; Credits</a></li>
 </ul>
 <hr />
@@ -107,6 +108,23 @@ Success rate target | ~98.5% | ~99%
     ├── output.m3u              # Final playlist
     └── README.md               # This document
 </code></pre>
+<h3>Clone from GitHub</h3>
+<li>To grab the v1.3 scanner and run it locally:</li>
+
+```bash
+# 1. Open MSVC Terminal
+
+# 2. Change into the v1.3 source
+git checkout Version-1.3
+
+# 3. Place your M3U playlist in this directory as input.txt
+#    (e.g. copy or rename your file accordingly)
+
+# 4. Compile the scanner
+
+# 5. Run the scanner
+```
+
 <h3>File Responsibilities</h3>
 <ul>
 <li><strong>Main.cpp</strong>: Bootstraps Normal vs. Research edition, initializes globals, parses flags, and launches the scan loop.</li>
