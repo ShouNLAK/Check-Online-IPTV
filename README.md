@@ -45,7 +45,10 @@ The Online IPTV Channel Scanner helps you quickly verify and optimize M3U playli
 5. Make sure to have data in `input.txt`
 6. Wait due scan (Or check Live Log - Only for Research Edition)
 7. Result will be in `output.txt`
- 
+
+*   If you're using Microsoft Visual Studio 2022, you can download file in `Folder (Version)` (Version 1.0 -> 1.3).
+    For Research Edition, please download whole `Folder (Research Edition)` then create the new in MSVC and add by existing items.
+
 ---
 
 ## What’s New in Version 1.3
