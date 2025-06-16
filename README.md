@@ -2,7 +2,7 @@
 
 **A simple IPTV playlist validator in C for Windows.**  
 Reads an M3U file (`input.txt`), checks each stream URL’s HTTP status, and outputs a cleaned playlist (`output.m3u`) containing only the active channels.  
-> The code is available in the **Version** folder | Released on 07/06/2025
+> Released on 07/06/2025
 
 ---
 
@@ -100,20 +100,17 @@ Version 1.0 is the inaugural release of the IPTV Channel Scanner. It performs a 
 To grab the v1.0 scanner and run it locally:
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/ShouNLAK/Check-Online-IPTV.git
+# 1. Open MVSC Terminal
 
-# 2. Change into the v1.0 source folder
-cd Check-Online-IPTV/Version/"Check Online IPTV (Ver 1.0)"
+# 2. Change into the v1.0 source 
+git checkout Version-1.0
 
-# 3. Compile the scanner
-gcc scanner.c -o IPTVScanner.exe
-
-# 4. Place your M3U playlist in this directory as input.txt
+# 3. Place your M3U playlist in this directory as input.txt
 #    (e.g. copy or rename your file accordingly)
 
+# 4. Compile the scanner
+
 # 5. Run the scanner
-./IPTVScanner.exe
 
 ```
 
