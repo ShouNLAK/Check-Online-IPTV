@@ -107,20 +107,17 @@ These enhancements deliver a more robust, user-friendly experience while preserv
 To grab the v1.1 scanner and run it locally:
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/ShouNLAK/Check-Online-IPTV.git
+# 1. Open MSVC Terminal
 
-# 2. Change into the v1.1 source folder
-cd Check-Online-IPTV/Version/"Check Online IPTV (Ver 1.1)"
+# 2. Change into the v1.1 source
+git checkout Version-1.1
 
-# 3. Compile the scanner
-gcc scanner.c -o IPTVScanner.exe
-
-# 4. Place your M3U playlist in this directory as input.txt
+# 3. Place your M3U playlist in this directory as input.txt
 #    (e.g. copy or rename your file accordingly)
 
+# 4. Compile the scanner
+
 # 5. Run the scanner
-./IPTVScanner.exe
 ```
 
 ---
@@ -158,4 +155,5 @@ gcc scanner.c -o IPTVScanner.exe
 
 Developed by **ShouNLAK**
 Provided as-is for educational and personal use.
+
 Contributions, issue reports, and pull requests are welcome via GitHub.
