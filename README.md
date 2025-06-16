@@ -9,7 +9,8 @@ This student-built tool validates IPTV playlists by testing stream URLs, measuri
 
 ## Table of Contents
 
-- [Introduction](#introduction)  
+- [Introduction](#introduction)
+- [How to run this code](#how-to-run-this-code)
 - [What’s New in Version 1.3](#whats-new-in-version-13)  
 - [Prerequisites](#prerequisites)  
 - [How It Works](#how-it-works)  
@@ -27,6 +28,24 @@ This student-built tool validates IPTV playlists by testing stream URLs, measuri
 
 The Online IPTV Channel Scanner helps you quickly verify and optimize M3U playlists. It measures your internet speed, handles HTTP redirects to capture the best-quality stream, converts raw resolution data into clear labels, filters duplicates, and presents results in a colorized, real-time UI. After scanning, an `output.m3u` file is generated—ready to play in VLC, Kodi, or Plex.
 
+---
+
+## How to run this code
+1. Open your Microsoft Visual Studio Code
+2. Open terminal (Ctrl + Shift + `)
+3. Type this command for specific version:
+   ```
+   Version 1.0 : git checkout Version-1.0
+   Version 1.1 : git checkout Version-1.1
+   Version 1.2 : git checkout Version-1.2
+   Version 1.3 : git checkout Version-1.3
+   Version 1.3 (Reseach Edition) : git checkout Version-1.3---Research-Edition
+   ```
+4. Compile the scanner
+5. Make sure to have data in `input.txt`
+6. Wait due scan (Or check Live Log - Only for Research Edition)
+7. Result will be in `output.txt`
+ 
 ---
 
 ## What’s New in Version 1.3
