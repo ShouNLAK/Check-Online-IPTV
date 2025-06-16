@@ -87,20 +87,17 @@ _All existing functionality remains unchanged:_
 To grab the v1.3 - reseach edition and run it locally:
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/ShouNLAK/Check-Online-IPTV.git
+# 1. Open MVSC Terminal
 
-# 2. Enter the Version 1.2 folder
-cd Check-Online-IPTV/Version/"Check Online IPTV (Ver 1.3 - Research edition)"
+# 2. Enter the Version 1.3 (Research Edition) folder
+git checkout Version-1.3---Research-Edition
 
-# 3. Compile the scanner
-gcc scanner.c -o IPTVScanner.exe
-
-# 4. Place your M3U playlist in this directory as "input.txt"
+# 3. Place your M3U playlist in this directory as "input.txt"
 #    (Ensure your file follows the correct M3U format)
 
+# 4. Compile the scanner
+
 # 5. Run the scanner
-IPTVScanner.exe
 ```
 
 ---
