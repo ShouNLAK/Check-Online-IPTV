@@ -1,0 +1,35 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: cl.exe build project",
+            "command": "cl.exe",
+            "args": [
+                "/Zi",                      // Include debugging information
+                "/EHsc",                    // Use standard C++ exception handling
+                "/nologo",                  // Suppress the startup banner
+                "Main.cpp",
+                "Channel_Scan.cpp",         // Renamed from "Channel Scan.cpp" to avoid space-related issues
+                "Log.cpp",
+                "Network.cpp",
+                "Sorting.cpp",
+                "System.cpp",
+                "UI.cpp",
+                "World.cpp",
+                "/Fe:main.exe"              // Output executable name
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Build the entire project with cl.exe"
+        }
+    ]
+}

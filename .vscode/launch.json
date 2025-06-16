@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug with cl.exe",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.exe",   // Ensure this path is valid
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": true, // During processing, set true if you want to see console output | false for integrated terminal
+      "preLaunchTask": "C/C++: cl.exe build project" // Ensure this matches your build task label if you want an automatic build
+    }
+  ]
+}
