@@ -118,7 +118,6 @@ To grab the v1.2 scanner and run it locally:
 
 ```bash
 # 1. Open MVSC Terminal
-Open Microsoft Visual Studio Code Terminal
 
 # 2. Enter the Version 1.2 
 git checkout Version-1.2
