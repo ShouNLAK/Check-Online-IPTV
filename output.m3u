@@ -1,0 +1,95 @@
+#EXTM3U
+#EXTINF:-1,ABC (720p)
+http://vthanh.utako.moe/abc/tracks-v1a1/mono.m3u8
+#EXTINF:-1,Animax (720p)
+http://vthanh.utako.moe/Animax/tracks-v1a1/mono.m3u8
+#EXTINF:-1,AT-X (1080p)
+http://vthanh.utako.moe/AT-X/tracks-v1a1/mono.m3u8
+#EXTINF:-1,BS Asahi (960x540)
+http://vthanh.utako.moe/bsasahi/tracks-v1a1/mono.m3u8
+#EXTINF:-1,BS Fuji (960x540)
+http://vthanh.utako.moe/bsfuji/tracks-v1a1/mono.m3u8
+#EXTINF:-1,BS NTV (960x540)
+http://vthanh.utako.moe/bsntv/tracks-v1a1/mono.m3u8
+#EXTINF:-1,BS TBS (720p)
+http://vthanh.utako.moe/bstbs/tracks-v1a1/mono.m3u8
+#EXTINF:-1,BS TV Tokyo (720p)
+http://vthanh.utako.moe/bstvtokyo/tracks-v1a1/mono.m3u8
+#EXTINF:-1,BS TV Tokyo 4K (1080p)
+http://vthanh.utako.moe/bstx4k/tracks-v1a1/mono.m3u8
+#EXTINF:-1,BS10 (1080p)
+http://vthanh.utako.moe/bs10/tracks-v1a1/mono.m3u8
+#EXTINF:-1,BS11 (720p)
+http://vthanh.utako.moe/BS11/tracks-v1a1/mono.m3u8
+#EXTINF:-1,Cartoon Network Japan (960x540)
+http://vthanh.utako.moe/cartoon_network/tracks-v1a1/mono.m3u8
+#EXTINF:-1,CGNTV Japan
+https://d2p4mrcwl6ly4.cloudfront.net/out/v1/8d50f69fdbbf411a8d302743e4263716/CGNWebLiveJP_1.m3u8
+#EXTINF:-1,Channel Ginga (1080p)
+http://vthanh.utako.moe/gingach/tracks-v1a1/mono.m3u8
+#EXTINF:-1,Disney Channel (960x540)
+http://vthanh.utako.moe/disneychan/tracks-v1a1/mono.m3u8
+#EXTINF:-1,Family Gekijyo (1080p)
+http://vthanh.utako.moe/familygeki/tracks-v1a1/mono.m3u8
+#EXTINF:-1,Fuji TV (1080p)
+http://vthanh.utako.moe/Fuji_TV/tracks-v1a1/mono.m3u8
+#EXTINF:-1,Gaora Sports (720p)
+http://vthanh.utako.moe/gaora/tracks-v1a1/mono.m3u8
+#EXTINF:-1,Green Channel (720p)
+http://vthanh.utako.moe/green/tracks-v1a1/mono.m3u8
+#EXTINF:-1,JSport 1 (720p)
+http://vthanh.utako.moe/js1/tracks-v1a1/mono.m3u8
+#EXTINF:-1,JSport 2 (720p)
+http://vthanh.utako.moe/js2/tracks-v1a1/mono.m3u8
+#EXTINF:-1,JSport 3 (720p)
+http://vthanh.utako.moe/js3/tracks-v1a1/mono.m3u8
+#EXTINF:-1,JSport 4 (720p)
+http://vthanh.utako.moe/js4/tracks-v1a1/mono.m3u8
+#EXTINF:-1,Kansai TV (720p)
+http://vthanh.utako.moe/kansaitv/tracks-v1a1/mono.m3u8
+#EXTINF:-1,KBS (720p)
+http://vthanh.utako.moe/kbs/tracks-v1a1/mono.m3u8
+#EXTINF:-1,MBS (720p)
+http://vthanh.utako.moe/mbs/tracks-v1a1/mono.m3u8
+#EXTINF:-1,NHK BS (720p)
+http://vthanh.utako.moe/NHK_BS/tracks-v1a1/mono.m3u8
+#EXTINF:-1,NHK BS4K (1080p)
+http://vthanh.utako.moe/bsp4k/tracks-v1a1/mono.m3u8
+#EXTINF:-1,NHK E (1080p)
+http://vthanh.utako.moe/NHK_E/tracks-v1a1/mono.m3u8
+#EXTINF:-1,NHK G (1080p)
+http://vthanh.utako.moe/NHK_G/tracks-v1a1/mono.m3u8
+#EXTINF:-1,NHK World Japan (720p)
+https://b-nhkwlive-ojp.nhkworld.jp/hls/live/2003459-b/nhkwlive-ojp-en/index_1M.m3u8
+#EXTINF:-1,NTV (1080p)
+http://vthanh.utako.moe/Nippon_TV/tracks-v1a1/mono.m3u8
+#EXTINF:-1,QVC
+https://cdn-live1.qvc.jp/iPhone/1501/1501.m3u8
+#EXTINF:-1,Space Shower TV (960x540)
+http://vthanh.utako.moe/spaceshower/tracks-v1a1/mono.m3u8
+#EXTINF:-1,SUN (1024x576)
+http://vthanh.utako.moe/suntv/tracks-v1a1/mono.m3u8
+#EXTINF:-1,TBS (1080p)
+http://vthanh.utako.moe/TBS/tracks-v1a1/mono.m3u8
+#EXTINF:-1,TBS Channel 1 (720p)
+http://vthanh.utako.moe/tbsch1/tracks-v1a1/mono.m3u8
+#EXTINF:-1,TBS Channel 2 (720p)
+http://vthanh.utako.moe/tbsch2/tracks-v1a1/mono.m3u8
+#EXTINF:-1,TOKYO MX1 (720p)
+http://vthanh.utako.moe/Tokyo_MX1/tracks-v1a1/mono.m3u8
+#EXTINF:-1,TOKYO MX2 (720p)
+http://vthanh.utako.moe/Tokyo_MX2/tracks-v1a1/mono.m3u8
+#EXTINF:-1,TV Asahi (1080p)
+http://vthanh.utako.moe/TV_Asahi/tracks-v1a1/mono.m3u8
+#EXTINF:-1,TV Osaka (720p)
+http://vthanh.utako.moe/tvo/tracks-v1a1/mono.m3u8
+#EXTINF:-1,TV Tokyo (720p)
+http://vthanh.utako.moe/TV_Tokyo/tracks-v1a1/mono.m3u8
+#EXTINF:-1,WOWOW Cinema (720p)
+http://vthanh.utako.moe/wcinema/tracks-v1a1/mono.m3u8
+#EXTINF:-1,WOWOW Live (720p)
+http://vthanh.utako.moe/wlive/tracks-v1a1/mono.m3u8
+#EXTINF:-1,WOWOW Prime (720p)
+http://vthanh.utako.moe/wprime/tracks-v1a1/mono.m3u8
+#EXTINF:-1,ytv (720p)
+http://vthanh.utako.moe/ytv/tracks-v1a1/mono.m3u8

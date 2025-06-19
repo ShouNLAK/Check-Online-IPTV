@@ -1,6 +1,8 @@
 #include "Channel_Scan.h"
 #include "Log.h"
 
+int s_enable_live_log = 0;
+
 // Count the number of channels in the input file by counting lines with "#EXTINF"
 int count_total_channels(FILE* fi) {
     int count = 0;
@@ -524,10 +526,97 @@ void store_channel_status(ChannelStatus* status,
     status->timeout = timeout;
 }
 
-void Check_Active(const char* input, const char* output) {
-    // Reset the log file at the beginning.
-    initialize_log_file("log.txt");
+#ifdef _WIN32
+#define THREAD_FUNC_RETURN DWORD
+#define THREAD_FUNC_CALL __stdcall
+#else
+#define THREAD_FUNC_RETURN void*
+#define THREAD_FUNC_CALL
+#endif
 
+#ifdef _WIN32
+#define THREAD_CREATE(thr, func, arg) (*(thr) = CreateThread(NULL, 0, func, arg, 0, NULL))
+#define THREAD_JOIN(thr) WaitForSingleObject(thr, INFINITE)
+#define MUTEX_INIT(mtx) InitializeCriticalSection(mtx)
+#define MUTEX_LOCK(mtx) EnterCriticalSection(mtx)
+#define MUTEX_UNLOCK(mtx) LeaveCriticalSection(mtx)
+#define MUTEX_DESTROY(mtx) DeleteCriticalSection(mtx)
+#else
+#define THREAD_CREATE(thr, func, arg) pthread_create(thr, NULL, func, arg)
+#define THREAD_JOIN(thr) pthread_join(thr, NULL)
+#define MUTEX_INIT(mtx) pthread_mutex_init(mtx, NULL)
+#define MUTEX_LOCK(mtx) pthread_mutex_lock(mtx)
+#define MUTEX_UNLOCK(mtx) pthread_mutex_unlock(mtx)
+#define MUTEX_DESTROY(mtx) pthread_mutex_destroy(mtx)
+#endif
+
+THREAD_FUNC_RETURN THREAD_FUNC_CALL channel_worker(void* arg) {
+    ThreadData* data = (ThreadData*)arg;
+    char channel_name[256];
+    char final_url[1024];
+    char original_url[1024];
+    char fetched_resolution[128] = {0};
+    int is_timeout = 0, is_ts = 0;
+
+    // Extract channel name
+    extract_channel_name(data->extinf_line, channel_name, sizeof(channel_name));
+    strncpy(original_url, data->url_line, sizeof(original_url) - 1);
+    original_url[sizeof(original_url) - 1] = '\0';
+    strncpy(final_url, data->url_line, sizeof(final_url) - 1);
+    final_url[sizeof(final_url) - 1] = '\0';
+
+    // Test the channel stream
+    int active = test_channel_stream(final_url, final_url, sizeof(final_url),
+        fetched_resolution, sizeof(fetched_resolution),
+        &is_timeout, &is_ts);
+
+    // ETA calculation
+    MUTEX_LOCK(data->progress_mutex);
+    (*data->processed)++;
+    double elapsed_sec = (double)(clock() - *data->start_clock) / CLOCKS_PER_SEC;
+    double avg_per_channel = elapsed_sec / (*data->processed);
+    double remaining_sec = avg_per_channel * (data->total_channels - *data->processed);
+    *data->eta_h = (int)(remaining_sec / 3600);
+    *data->eta_m = ((int)remaining_sec % 3600) / 60;
+    *data->eta_s = (int)remaining_sec % 60;
+
+    // Progress bar update
+    update_progress_bar(*data->processed, data->total_channels, channel_name,
+        data->scan_chars[*data->scan_idx], *data->eta_h, *data->eta_m, *data->eta_s);
+    *data->scan_idx = (*data->scan_idx + 1) % 4;
+    MUTEX_UNLOCK(data->progress_mutex);
+
+    // Simulate response codes for logging
+    int initial_response = 200;
+    if (is_ts) initial_response = 302;
+    const char* status_str = (initial_response == 302) ? "Redirected" : (active ? "Live" : "Inactive");
+
+    rollback_to_original_if_needed(original_url, final_url, sizeof(final_url));
+
+    // Log to CSV file with correct columns
+    write_log_csv("log.csv", channel_name, status_str, fetched_resolution, original_url, final_url);
+    // Live Log: log.txt is updated after each scan (for live viewing)
+    if (s_enable_live_log) {
+        write_log_txt("log.txt", channel_name, status_str, fetched_resolution, original_url, final_url);
+    }
+
+    // Store channel status
+    store_channel_status(&data->status_list[data->index], channel_name, final_url,
+        fetched_resolution, active, is_timeout);
+
+#ifdef _WIN32
+    return 0;
+#else
+    return NULL;
+#endif
+}
+
+void Check_Active(const char* input, const char* output, int concurrency, int enable_live_log) {
+    // Reset the log file at the beginning.
+    initialize_log_csv("log.csv");
+    if (enable_live_log)
+        s_enable_live_log = 1;
+        
     FILE* fi = fopen(input, "r");
     if (!fi) {
         printf("Error opening input file.\n");
@@ -553,119 +642,79 @@ void Check_Active(const char* input, const char* output) {
         return;
     }
 
-    // Initialize spinner and progress bar variables.
     char scan_chars[] = "|/-\\";
     int scan_idx = 0;
     int processed = 0;
-
-    // Temporary buffers for channel entry.
-    char extinf_line[1024];
-    char url_line[1024];
-    char channel_name[256];
-    char final_url[1024];      // This will be updated by test_channel_stream.
-    char original_url[1024];   // Preserve the original URL from the file.
-    char fetched_resolution[128] = { 0 };
-
-    clock_t start_clock = clock();
     int eta_h = 0, eta_m = 0, eta_s = 0;
+    clock_t start_clock = clock();
 
-    while (read_channel_entry(fi, extinf_line, sizeof(extinf_line), url_line, sizeof(url_line))) {
-        // Extract channel name from #EXTINF line.
-        extract_channel_name(extinf_line, channel_name, sizeof(channel_name));
+    mutex_t progress_mutex;
+    MUTEX_INIT(&progress_mutex);
 
-        // Save the original URL from the file.
-        strncpy(original_url, url_line, sizeof(original_url) - 1);
-        original_url[sizeof(original_url) - 1] = '\0';
-
-        // Copy the original URL into final_url (this may be updated by test_channel_stream).
-        strncpy(final_url, url_line, sizeof(final_url) - 1);
-        final_url[sizeof(final_url) - 1] = '\0';
-
-        // Flags for timeouts and stream type.
-        int is_timeout = 0;
-        int is_ts = 0;
-
-        // Update progress bar and spinner before testing each channel.
-        processed++;
-        update_progress_bar(processed, total_channels, channel_name, scan_chars[scan_idx], eta_h, eta_m, eta_s);
-        scan_idx = (scan_idx + 1) % 4;
-
-        // Test the channel stream (this function may update final_url and fetched_resolution).
-        int active = test_channel_stream(final_url, final_url, sizeof(final_url),
-            fetched_resolution, sizeof(fetched_resolution),
-            &is_timeout, &is_ts);
-
-        // ---- ETA Calculations ----
-        double elapsed_sec = (double)(clock() - start_clock) / CLOCKS_PER_SEC;
-        double avg_per_channel = elapsed_sec / processed;
-        double remaining_sec = avg_per_channel * (total_channels - processed);
-        eta_h = (int)(remaining_sec / 3600);
-        eta_m = ((int)remaining_sec % 3600) / 60;
-        eta_s = (int)remaining_sec % 60;
-
-        // -----------------------------------------------------------------------
-        // Simulate response codes for demonstration.
-        // In a refined version, you would extract real response codes.
-        int initial_response = 200;   // Default simulated response.
-        int final_response = active ? 200 : 404;
-        if (is_ts) {
-            // If test_channel_stream flagged a redirect (is_ts is TRUE),
-            // simulate an initial redirection (302) that resolved to 200.
-            initial_response = 302;
-            final_response = 200;
-        }
-
-        // Build a string for the Respond Code.
-        char respond_code[32];
-        if (initial_response == 302)
-            snprintf(respond_code, sizeof(respond_code), "302 -> 200");
-        else
-            snprintf(respond_code, sizeof(respond_code), "%d", initial_response);
-
-        // Determine the Status string for logging.
-        const char* status_str = NULL;
-        if (initial_response == 302)
-            status_str = "Redirected";
-        else if (active)
-            status_str = "Live";
-        else
-            status_str = "Inactive";
-
-        // Rollback if there's any '/../' present.
-        rollback_to_original_if_needed(original_url, final_url, sizeof(final_url));
-
-
-        // ---- Logging Integration ----
-        // The logging function is defined as:
-        // write_log_line(const char *log_filename,
-        //                const char *channel_name,
-        //                const char *status,
-        //                const char *respond_code,
-        //                const char *url,
-        //                const char *fixed_url);
-        write_log_line("log.txt",
-            /* channel_name */ channel_name,  // e.g., "CBS News 24/7"
-            /* status       */ status_str,    // "Redirected", "Live", or "Inactive"
-            /* resolution  */ fetched_resolution,  // e.g., "1920 x 1080" ...
-            /* url          */ original_url,  // Original URL from the playlist/file
-            /* fixed_url    */ final_url);    // Updated URL after processing.
-        // ---- End Logging Integration ----
-
-        // Save channel status for later processing (summary & duplicate removal).
-        store_channel_status(&status_list[processed - 1], channel_name, final_url,
-            fetched_resolution, active, is_timeout);
+    // Read all entries into arrays first
+    char** extinf_lines = (char**)malloc(total_channels * sizeof(char*));
+    char** url_lines = (char**)malloc(total_channels * sizeof(char*));
+    for (int i = 0; i < total_channels; ++i) {
+        extinf_lines[i] = (char*)malloc(1024);
+        url_lines[i] = (char*)malloc(1024);
+    }
+    int entry_count = 0;
+    while (read_channel_entry(fi, extinf_lines[entry_count], 1024, url_lines[entry_count], 1024)) {
+        entry_count++;
+        if (entry_count >= total_channels) break;
     }
 
+    // Multithreaded processing: N threads at a time
+    int i = 0;
+    while (i < total_channels) {
+        int batch = (total_channels - i >= concurrency) ? concurrency : (total_channels - i);
+        thread_handle_t* threads = (thread_handle_t*)malloc(batch * sizeof(thread_handle_t));
+        ThreadData* thread_data = (ThreadData*)malloc(batch * sizeof(ThreadData));
+
+        for (int t = 0; t < batch; ++t) {
+            thread_data[t].index = i + t;
+            strncpy(thread_data[t].extinf_line, extinf_lines[i + t], 1024);
+            strncpy(thread_data[t].url_line, url_lines[i + t], 1024);
+            thread_data[t].status_list = status_list;
+            thread_data[t].processed = &processed;
+            thread_data[t].total_channels = total_channels;
+            thread_data[t].scan_chars = scan_chars;
+            thread_data[t].scan_idx = &scan_idx;
+            thread_data[t].eta_h = &eta_h;
+            thread_data[t].eta_m = &eta_m;
+            thread_data[t].eta_s = &eta_s;
+            thread_data[t].start_clock = &start_clock;
+            thread_data[t].progress_mutex = &progress_mutex;
+            THREAD_CREATE(&threads[t], channel_worker, &thread_data[t]);
+        }
+        for (int t = 0; t < batch; ++t) {
+            THREAD_JOIN(threads[t]);
+        }
+        free(threads);
+        free(thread_data);
+        i += batch;
+    }
+
+    // Free allocated memory for extinf_lines and url_lines
+    for (int i = 0; i < total_channels; ++i) {
+        free(extinf_lines[i]);
+        free(url_lines[i]);
+    }
+    free(extinf_lines);
+    free(url_lines);
+
+    MUTEX_DESTROY(&progress_mutex);
     // Sorting and writing summary after all channels are processed.
     sortStatusList(status_list, processed);
 
     clock_t end_time = clock();
     double elapsed_total = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-    print_scan_summary(status_list, processed, elapsed_total);
+    printf("\033[F\033[K");
+    print_scan_summary(status_list, total_channels, elapsed_total);
 
     // Write the active channels to the output file.
     fprintf(fo, "#EXTM3U\n");
-    for (int i = 0; i < processed; i++) {
+    for (int i = 0; i < total_channels; i++) {
         if (status_list[i].active) {
             if (strlen(status_list[i].resolution) > 0)
                 fprintf(fo, "#EXTINF:-1,%s (%s)\n", status_list[i].name, status_list[i].resolution);

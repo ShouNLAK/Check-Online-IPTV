@@ -13,6 +13,8 @@ int check_internet()
 }
 
 void Country_Find() {
+    print_banner("COUNTRY LOOKUP", CYAN);
+
     // Run the curl command to fetch the country code
     FILE* pipe = POPEN("curl -s ipinfo.io/country", "r");
     if (!pipe) {
@@ -20,7 +22,7 @@ void Country_Find() {
         return;
     }
 
-    char country_code[4] = { 0 };  // 2-letter code + newline + nul
+    char country_code[4] = { 0 };
     if (!fgets(country_code, sizeof(country_code), pipe)) {
         fprintf(stderr, RED "[ERROR]" RESET " Failed reading country code.\n\n");
         PCLOSE(pipe);
@@ -43,19 +45,18 @@ void Country_Find() {
 
     // Print the result
     if (country_name) {
-        printf(CYAN "[LOCATION]" RESET " Detected country: " GREEN "%s" RESET " (%s)\n\n",
+        printf(CYAN "[LOCATION]" RESET " Detected country: " GREEN "%s" RESET " (" YELLOW "%s" RESET ")\n\n",
             country_name, country_code);
     }
     else {
-        printf(YELLOW "[LOCATION]" RESET " Country code “%s” not recognized in database.\n\n",
+        printf(YELLOW "[LOCATION]" RESET " Country code " RED "\"%s\"" RESET " not recognized in database.\n\n",
             country_code);
     }
 }
 
 
 void measure_speed() {
-    // Display a banner for the speed test.
-    print_banner("Speed Test", BLUE);
+    print_banner("SPEED TEST", BLUE);
     printf(CYAN "[INFO]" RESET " Speedtest will be starting soon\n");
     printf(YELLOW "[INFO]" RESET " Please wait while we measure your connection speed...\n");
 

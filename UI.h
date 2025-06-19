@@ -2,9 +2,8 @@
 #define UI_H
 
 #include "Header.h"
-#include "Header.h"
-#include "System.h"
 #include "Sorting.h"
+#include "System.h"
 
 // Reset and Text Attributes
 #define RESET             "\033[0m"
@@ -63,5 +62,6 @@ int utf8_display_width(const char* str);
 void print_utf8_fixed_width(const char* str, int width);
 void update_progress_bar(int current, int total, const char* channel_name, char spinner, int eta_hours, int eta_minutes, int eta_secs);
 void print_scan_summary(ChannelStatus* status_list, int processed, double elapsed_sec);
+int ask_concurrency(int max_threads);
 
 #endif

@@ -24,6 +24,7 @@
 #endif
 
 void msleep(int ms);
+int get_number_of_processors(void);
 
 #endif
 

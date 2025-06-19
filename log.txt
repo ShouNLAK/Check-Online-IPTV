@@ -1,1 +1,143 @@
- 
+Time                 | Channel Name                   | Status       | Resolution    | URL
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:07  | NHK G                          | Live         | 1920x1080     | http://vthanh.utako.moe/NHK_G/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/NHK_G/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:07  | NTV                            | Live         | 1920x1080     | http://vthanh.utako.moe/Nippon_TV/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/Nippon_TV/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:07  | NHK E                          | Live         | 1920x1080     | http://vthanh.utako.moe/NHK_E/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/NHK_E/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:07  | TBS                            | Live         | 1920x1080     | http://vthanh.utako.moe/TBS/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/TBS/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:09  | TV Asahi                       | Live         | 1920x1080     | http://vthanh.utako.moe/TV_Asahi/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/TV_Asahi/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:09  | Fuji TV                        | Live         | 1920x1080     | http://vthanh.utako.moe/Fuji_TV/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/Fuji_TV/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:09  | TOKYO MX1                      | Live         | 1280x720      | http://vthanh.utako.moe/Tokyo_MX1/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/Tokyo_MX1/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:09  | TV Tokyo                       | Live         | 1280x720      | http://vthanh.utako.moe/TV_Tokyo/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/TV_Tokyo/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:10  | TOKYO MX2                      | Live         | 1280x720      | http://vthanh.utako.moe/Tokyo_MX2/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/Tokyo_MX2/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:10  | ABC                            | Live         | 1280x720      | http://vthanh.utako.moe/abc/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/abc/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:10  | MBS                            | Live         | 1280x720      | http://vthanh.utako.moe/mbs/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/mbs/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:11  | TV Osaka                       | Live         | 1280x720      | http://vthanh.utako.moe/tvo/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/tvo/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:12  | Kansai TV                      | Live         | 1280x720      | http://vthanh.utako.moe/kansaitv/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/kansaitv/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:12  | KBS                            | Live         | 1280x720      | http://vthanh.utako.moe/kbs/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/kbs/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:12  | SUN                            | Live         | 1024x576      | http://vthanh.utako.moe/suntv/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/suntv/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:12  | ytv                            | Live         | 1280x720      | http://vthanh.utako.moe/ytv/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/ytv/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:14  | Animax                         | Live         | 1280x720      | http://vthanh.utako.moe/Animax/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/Animax/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:14  | BS10                           | Live         | 1920x1080     | http://vthanh.utako.moe/bs10/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/bs10/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:14  | NHK BS                         | Live         | 1280x720      | http://vthanh.utako.moe/NHK_BS/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/NHK_BS/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:14  | BS11                           | Live         | 1280x720      | http://vthanh.utako.moe/BS11/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/BS11/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:15  | BS NTV                         | Live         | 960x540       | http://vthanh.utako.moe/bsntv/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/bsntv/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:15  | NHK BS4K                       | Live         | 1920x1080     | http://vthanh.utako.moe/bsp4k/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/bsp4k/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:15  | BS Asahi                       | Live         | 960x540       | http://vthanh.utako.moe/bsasahi/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/bsasahi/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:15  | BS TBS                         | Live         | 1280x720      | http://vthanh.utako.moe/bstbs/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/bstbs/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:17  | BS TV Tokyo 4K                 | Live         | 1920x1080     | http://vthanh.utako.moe/bstx4k/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/bstx4k/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:17  | BS TV Tokyo                    | Live         | 1280x720      | http://vthanh.utako.moe/bstvtokyo/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/bstvtokyo/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:17  | WOWOW Prime                    | Live         | 1280x720      | http://vthanh.utako.moe/wprime/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/wprime/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:17  | BS Fuji                        | Live         | 960x540       | http://vthanh.utako.moe/bsfuji/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/bsfuji/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:18  | JSport 1                       | Live         | 1280x720      | http://vthanh.utako.moe/js1/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/js1/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:18  | WOWOW Live                     | Live         | 1280x720      | http://vthanh.utako.moe/wlive/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/wlive/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:18  | JSport 2                       | Live         | 1280x720      | http://vthanh.utako.moe/js2/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/js2/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:18  | WOWOW Cinema                   | Live         | 1280x720      | http://vthanh.utako.moe/wcinema/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/wcinema/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:20  | JSport 4                       | Live         | 1280x720      | http://vthanh.utako.moe/js4/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/js4/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:20  | JSport 3                       | Live         | 1280x720      | http://vthanh.utako.moe/js3/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/js3/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:20  | Green Channel                  | Live         | 1280x720      | http://vthanh.utako.moe/green/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/green/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:20  | Gaora Sports                   | Live         | 1280x720      | http://vthanh.utako.moe/gaora/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/gaora/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:21  | AT-X                           | Live         | 1920x1080     | http://vthanh.utako.moe/AT-X/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/AT-X/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:21  | Disney Channel                 | Live         | 960x540       | http://vthanh.utako.moe/disneychan/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/disneychan/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:21  | Space Shower TV                | Live         | 960x540       | http://vthanh.utako.moe/spaceshower/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/spaceshower/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:22  | NHK World Japan                | Live         | 1280x720      | https://master.nhkworld.jp/nhkworld-tv/playlist/live.m3u8
+                     |                                |              |               |    ---> https://b-nhkwlive-ojp.nhkworld.jp/hls/live/2003459-b/nhkwlive-ojp-en/index_1M.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:23  | Family Gekijyo                 | Live         | 1920x1080     | http://vthanh.utako.moe/familygeki/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/familygeki/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:23  | Cartoon Network Japan          | Live         | 960x540       | http://vthanh.utako.moe/cartoon_network/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/cartoon_network/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:23  | TBS Channel 1                  | Live         | 1280x720      | http://vthanh.utako.moe/tbsch1/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/tbsch1/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:23  | TBS Channel 2                  | Live         | 1280x720      | http://vthanh.utako.moe/tbsch2/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/tbsch2/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:24  | Channel Ginga                  | Live         | 1920x1080     | http://vthanh.utako.moe/gingach/index.m3u8
+                     |                                |              |               |    ---> http://vthanh.utako.moe/gingach/tracks-v1a1/mono.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:24  | QVC                            | Live         |               | https://cdn-live1.qvc.jp/iPhone/1501/1501.m3u8
+                     |                                |              |               |    ---> https://cdn-live1.qvc.jp/iPhone/1501/1501.m3u8
+---------------------------------------------------------------------------------------------
+2025-06-19 00:46:26  | CGNTV Japan                    | Live         |               | https://d2p4mrcwl6ly4.cloudfront.net/out/v1/8d50f69fdbbf411a8d302743e4263716/CGNWebLiveJP_1.m3u8
+                     |                                |              |               |    ---> https://d2p4mrcwl6ly4.cloudfront.net/out/v1/8d50f69fdbbf411a8d302743e4263716/CGNWebLiveJP_1.m3u8
+---------------------------------------------------------------------------------------------

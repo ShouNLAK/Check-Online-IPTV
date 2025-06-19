@@ -177,3 +177,50 @@ void print_scan_summary(ChannelStatus* status_list, int processed, double elapse
     int seconds = tot_sec % 60;
     printf("Total scan time: " CYAN "%02d:%02d:%02d" RESET " (hh:mm:ss)\n", hours, minutes, seconds);
 }
+
+int ask_concurrency(int max_threads) {
+    // ASCII UI banner
+    printf(BLUE "+------------------------------------------------------------+\n" RESET);
+    printf(BLUE "|                  " CYAN "CHANNEL SCAN CONCURRENCY" BLUE "                  |\n" RESET);      
+    printf(BLUE "+------------------------------------------------------------+\n" RESET);
+    printf("|  " YELLOW "How many channels do you want to scan at the same time?" RESET "   |\n");
+    printf("|  " WHITE "Recommended: " GREEN "%d" WHITE " (number of CPU cores)" RESET "                      |\n", max_threads);
+    printf("|  " CYAN "Enter a value between " YELLOW "1" CYAN " and " YELLOW "%d" CYAN " and press Enter." RESET "            |\n", max_threads);
+    printf(BLUE "+------------------------------------------------------------+\n" RESET);
+    printf("" CYAN "Concurrency" RESET " [" YELLOW "1-%d" RESET "]: ", max_threads);
+    fflush(stdout);
+    int user_threads = 0;
+    while (1) {
+        fflush(stdout);
+        char input[32];
+        if (!fgets(input, sizeof(input), stdin)) {
+            // Input error, try again
+            printf("\033[F\033[K");
+            printf(RED "[ERROR]" RESET " Please enter a number between 1 and %d: ", max_threads);
+            continue;
+        }
+        // Check if input is just a newline (user pressed Enter)
+        if (input[0] == '\n') {
+            printf("\033[F\033[K");
+            printf(CYAN "Please enter a number between 1 and %d: ", max_threads);
+            continue;
+        }
+        // Try to parse the number
+        if (sscanf(input, "%d", &user_threads) != 1) {
+            printf("\033[F\033[K");
+            printf(RED "[ERROR]" RESET " Please enter a number between 1 and %d: ", max_threads);
+            continue;
+        }
+        if (user_threads >= 1 && user_threads <= max_threads) {
+            break;
+        } else {
+            printf("\033[F\033[K");
+            printf(RED "[ERROR]" RESET " Please enter a number between 1 and %d: ", max_threads);
+        }
+    }
+    for (int i = 0; i < 5; i++) {
+        printf("\033[F\033[K");
+    }
+    printf(GREEN "[CONFIRM]" RESET " Using " YELLOW "%d" RESET " concurrent scan(s).\n\n", user_threads);
+    return user_threads;
+}
