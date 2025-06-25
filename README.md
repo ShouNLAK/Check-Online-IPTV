@@ -1,259 +1,218 @@
-# Online IPTV Channel Scanner (Standard C) – Windows
+# Online IPTV Channel Scanner (Windows - Standard C)
 
-**A powerful IPTV channel scanner built in Standard C for Windows.**  
-This student-built tool validates IPTV playlists by testing stream URLs, measuring network performance, and filtering out inactive or duplicate channels—all through a vibrant, dynamic console UI.
-
-> **Latest:** Version 1.3.0 | Released on 15/06/2025
-
----
-
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Disclaimer](#disclaimer)
-- [How to run this code](#how-to-run-this-code)
-- [What’s New in Version 1.3](#whats-new-in-version-13)  
-- [Prerequisites](#prerequisites)  
-- [How It Works](#how-it-works)  
-- [Features](#features)  
-- [Optional Features](#optional-features)  
-- [Research Edition File Structure](#research-edition-file-structure)  
-- [Version History & Improvements](#version-history--improvements)  
-- [Frequently Asked Questions](#frequently-asked-questions)  
-- [Demo & UI Preview](#demo--ui-preview)  
-- [License & Credits](#license--credits)  
+> **Version:** 1.4.0 (Unified)  
+> **Release Date:** 25/06/2025  
+> **Author:** [ShouNLAK](https://github.com/ShouNLAK)  
+> **License:** Open Source (see below)
 
 ---
 
-## Introduction
+## 🚀 Overview
 
-The Online IPTV Channel Scanner helps you quickly verify and optimize M3U playlists. It measures your internet speed, handles HTTP redirects to capture the best-quality stream, converts raw resolution data into clear labels, filters duplicates, and presents results in a colorized, real-time UI. After scanning, an `output.m3u` file is generated—ready to play in VLC, Kodi, or Plex.
+**Online IPTV Channel Scanner** is a high-performance, multi-threaded tool for validating and optimizing IPTV playlists (M3U format). Built in standard C for Windows and Linux, it rapidly checks stream URLs in parallel, measures network performance, and filters out inactive or duplicate channels—all with a modern, dynamic console UI.
 
----
-
-## Disclaimer
-
-This tool is designed for **technical validation and personal use only**, to help users check the availability and performance of IPTV stream URLs.
-
-* **It does not provide, host, or endorse any copyrighted content or unauthorized streams.**
-* Users are solely responsible for the legality of the M3U playlists and stream URLs they choose to scan. Ensure you have the necessary rights or permissions to access the content linked by the URLs you use.
-* We strongly advise against using this tool to access, distribute, or promote copyrighted material without proper authorization. Any such use is at the user's own risk and may violate applicable laws.
-
-**For publicly available and lawfully aggregated IPTV playlists, you may explore communities like [IPTV-org on GitHub](https://github.com/iptv-org/iptv).** Please exercise due diligence and respect all copyright laws when sourcing M3U files.
+**From v1.4 onward, all features from the Normal and Research Editions are unified in a single, maintainable codebase.**
 
 ---
 
-## How to run this code
-1. Open your Microsoft Visual Studio Code
-2. Open terminal (Ctrl + Shift + `)
-3. Type this command for specific version:
-   ```
-   Version 1.0 : git checkout Version-1.0
-   Version 1.1 : git checkout Version-1.1
-   Version 1.2 : git checkout Version-1.2
-   Version 1.3 : git checkout Version-1.3
-   Version 1.3 (Reseach Edition) : git checkout Version-1.3---Research-Edition
-   ```
-4. Compile the scanner
-5. Make sure to have data in `input.txt`
-6. Wait due scan (Or check Live Log - Only for Research Edition)
-7. Result will be in `output.txt`
+## 📺 Live Demo
 
-*   If you're using Microsoft Visual Studio 2022, you can download file in `Folder (Version)` (Version 1.0 -> 1.3).
-    For Research Edition, please download whole `Folder (Research Edition)` then create the new in MSVC and add by existing items.
+<!-- Replace the placeholder below with your GIF -->
+<p align="center">
+  <img src="demo.gif" alt="Live Demo of IPTV Channel Scanner" width="700"/>
+</p>
 
 ---
 
-## What’s New in Version 1.3
+## 🗂️ Table of Contents
 
-- **Research Edition is now available!**  
-  A fully modular, instrumented codebase (7 files, <200 lines each) with built-in `scan.log`, academic annotations, and hooks for performance or deep-learning experiments.
-
-- **Blazing-Fast Auto-Redirects & Higher Accuracy**  
-  Fetches final stream URLs in just 2–3 s (instead of 22 s for some providers), boosting Normal Edition accuracy to ~98.5% and Research Edition to ~99%.
-
-- **Internet Speed Test**  
-  Same as Version 1.2: downloads a 1 MB file to report Mbps, alongside continuous connectivity checks and geo-detection.
-
-- **Full UTF-8 Support & Fixed-Width Alignment**  
-  Perfect rendering of non-English and special characters; neatly aligned columns for all tables and logs.
-
-- **Vibrant, User-Friendly Interface**  
-  Bright banners, dynamic progress bars, live countdown timers, and timestamped, color-coded logs.
-
-- **Enhanced Resolution & Duplicate Handling**  
-  Real-time resolution detection with labels like “480p”, “1080p”, “4K”; intelligent duplicate filtering retains the highest-quality stream.
-
-- **Built-In Logging (Research Edition)**  
-  Generates `scan.log` with per-URL timings, HTTP codes, retries, and failures—ideal for profiling, instrumentation, and teaching.
+- [Overview](#-overview)
+- [Live Demo](#-live-demo)
+- [Features](#-features)
+- [How It Works](#-how-it-works)
+- [Quick Start](#-quick-start)
+- [Building & Running](#-building--running)
+- [Output Files](#-output-files)
+- [Modules & Architecture](#-modules--architecture)
+- [Repository Structure](#-repository-structure)
+- [Version History](#-version-history)
+- [FAQ](#-faq)
+- [License & Credits](#-license--credits)
 
 ---
 
-## Prerequisites
+## ✨ Features
 
-- **OS:** Windows 10 or later  
-- **Tools:**  
-  - `curl` (HTTP requests, speed test, auto-redirect)  
-  - `ping` (connectivity check)  
-  - An M3U playlist named `input.txt`  
-  - **Optional:** VLC Media Player (for auto-launch)
-
-- **Input File Format (`input.txt`):**  
-  ```m3u
-  #EXTM3U
-  #EXTINF:-1,Channel Name (HD)
-  https://stream.example.com/…
-  ```
+- **Ultra-fast Multi-threaded Scanning** — Leverages all CPU cores for parallel URL checks.
+- **Modern Console UI** — Colorized, real-time progress bar, spinner, ETA, and status indicators.
+- **Comprehensive Diagnostics** — Internet speed test, connectivity check, and geo-location.
+- **Smart Duplicate Filtering** — Keeps only the highest-quality stream for each channel.
+- **Dual-format Logging** — Human-readable `log.txt` and machine-friendly `log.csv`.
+- **Auto-redirect Handling** — Follows HTTP redirects to resolve final stream URLs.
+- **Ready-to-use Output** — Cleaned `output.m3u` playlist for any IPTV player.
+- **Cross-platform** — Standard C, works on Windows and Linux.
 
 ---
 
-## How It Works
+## ⚙️ How It Works
 
-1. **Connectivity & Speed Test**  
-   - Pings `google.com` for internet access.  
-   - Downloads a 1 MB file to measure download speed.  
-   - Performs IP lookup to retrieve your country code for geo-restriction insight.
+1. **Connectivity & Speed Test:**  
+   - Pings `google.com` to verify internet access.
+   - Downloads a test file to measure download speed (Mbps).
+   - Performs IP geo-lookup for country detection.
 
-2. **Playlist Parsing**  
-   - Reads `input.txt`, counting each `#EXTINF` entry.  
-   - Extracts channel names and optional manual resolution tags.
+2. **Playlist Parsing:**  
+   - Reads `input.txt`, extracts channel names and URLs.
 
-3. **URL Scanning & Auto-Redirect**  
-   - Issues `curl` HEAD/GET requests with a configurable timeout.  
-   - Marks HTTP 2XX/3XX or downloadable headers as **active**.  
-   - On HTTP 302, fetches the `Location:` header and updates to the final stream URL (2–3 s resolution).  
-   - Retries poor connections automatically before marking failures.
+3. **Concurrent Channel Scanning:**  
+   - Launches multiple threads to test streams in parallel.
+   - Marks channels as **Live** (HTTP 2XX/3XX) or **Inactive**.
 
-4. **Resolution Conversion & Duplicate Filtering**  
-   - Retrieves raw resolution (e.g., “720x480”) and converts to user-friendly labels.  
-   - Detects identical URLs and retains the entry with the highest detected quality.
+4. **Duplicate & Quality Filtering:**  
+   - Removes duplicate URLs, keeping the best quality stream.
 
-5. **Real-Time UI & ETA**  
-   - Displays a color-coded progress bar, spinner, channel count, and ETA.
+5. **Logging & Output:**  
+   - Generates `output.m3u`, `log.txt`, and `log.csv` with detailed results.
 
-6. **Output & VLC Launch**  
-   - Writes active channels to `output.m3u` with clean metadata.  
-   - Optionally prompts to open the result in VLC Media Player.  
-   ![VLC Launch Prompt](https://github.com/user-attachments/assets/ed21b368-da5c-4040-9ca0-30f4c6e80bc4)
+6. **Dynamic UI:**  
+   - Displays a vibrant, color-coded progress bar, spinner, and live stats.
 
 ---
 
-## Features
+## ⚡ Quick Start
 
-- Advanced connectivity and speed diagnostics  
-- Smart URL scanning with ultra-fast auto-redirect  
-- Dynamic resolution detection and labeling  
-- Intelligent duplicate consolidation  
-- Colorized, UTF-8 console UI with ETA and logs  
+1. **Clone the repository:**
+    ```bash
+    git clone https://github.com/ShouNLAK/Check-Online-IPTV.git
+    cd Check-Online-IPTV
+    ```
 
----
+2. **Place your M3U playlist as `input.txt` in the project root.**
 
-## Optional Features
-
-- **VLC Auto-Launch:** Prompt to open `output.m3u` in VLC after scanning  
-- **Custom Timeouts:** Adjust per-URL timeout (up to 30 s)  
-- **Performance Metrics:** Breakdown of active, inactive, timed-out, and host-empty failures  
-- **Theming:** Light/dark color schemes and custom banners  
-- **Academic Hooks (Research):** Built-in mocks and timers for instrumentation and deep-learning analysis  
+3. **Build and run (see below for details).**
 
 ---
 
-## Research Edition File Structure
+## 🛠️ Building & Running
 
-```text
-Research Edition File Structure
-├── References/                  
-├── External Dependencies/       
-├── Header Files/               # Public APIs & shared data structures
-│   ├── All.h                   # Central include
-│   ├── Channel_Scan.h          # Scan & retry logic
-│   ├── Header.h                # M3U parsing
-│   ├── Log.h                   # Logging API
-│   ├── Network.h               # HTTP & geo-lookup
-│   ├── Sorting.h               # Duplicate & quality logic
-│   ├── System.h                # Speed test & timers
-│   ├── UI.h                    # Console rendering & UTF-8
-│   └── World.h                 # Global country code configure
-├── Resource Files/             # Icons, color schemes
-├── Source Files/               # <200 lines each
-│   ├── Main.cpp                # Entry & orchestrator
-│   ├── Channel_Scan.cpp        # Implements Channel_Scan.h
-│   ├── Network.cpp             # Implements Network.h
-│   ├── Sorting.cpp             # Implements Sorting.h
-│   ├── System.cpp              # Implements System.h
-│   ├── UI.cpp                  # Implements UI.h
-│   ├── World.cpp               # Implements World.h
-│   └── log.cpp                 # Implements Log.h
-└── Other Files/                
-    ├── input.txt               # Sample playlist
-    ├── scan.log                # Generated by Research Edition
-    ├── output.m3u              # Final playlist
-    └── README.md               # This document
+### Method 1: Using Git Branches (Recommended)
+
+1. **Install prerequisites:**  
+   - Windows 10+ or Linux  
+   - C17 compiler (GCC/Clang)  
+   - `git`
+
+2. **Checkout the desired version:**
+    ```bash
+    git checkout Version-1.4
+    ```
+
+3. **Compile:**
+    ```bash
+    gcc src/*.c -o IPTVScanner.exe -Iinclude
+    ```
+
+4. **Run:**
+    ```bash
+    ./IPTVScanner.exe
+    ```
+
+### Method 2: From Versioned Folders (Alternative)
+
+- Navigate to the version folder and compile as above.
+
+---
+
+## 📄 Output Files
+
+- **`output.m3u`** — Cleaned, validated playlist (for VLC, Kodi, etc.)
+- **`log.txt`** — Human-readable scan log (status, resolution, URL)
+- **`log.csv`** — Structured log for data analysis (Excel, scripts)
+
+---
+
+## 🧩 Modules & Architecture
+
+| Module              | Responsibility                                      |
+|---------------------|-----------------------------------------------------|
+| `main.c`            | Orchestrates workflow, UI, and cleanup              |
+| `system.c`          | Connectivity, speed test, geo-lookup                |
+| `network.c`         | Network requests, HTTP/redirect handling            |
+| `channel_scan.c`    | Core scan logic, threading, progress updates        |
+| `sorting.c`         | Duplicate removal, quality selection                |
+| `ui.c`              | Console UI, banners, color, progress bar            |
+| `world.c`           | Country code lookup                                 |
+
+---
+
+## 📁 Repository Structure
+
+```
+/                  ← root
+├── include/       ← Public headers
+│   ├── all.h
+│   ├── ui.h
+│   ├── network.h
+│   ├── system.h
+│   ├── channel_scan.h
+│   ├── sorting.h
+│   └── world.h
+│
+├── src/           ← Implementation (.c files)
+│   ├── main.c
+│   ├── ui.c
+│   ├── network.c
+│   ├── system.c
+│   ├── channel_scan.c
+│   ├── sorting.c
+│   └── world.c
+│
+├── input.txt      ← Input playlist
+├── output.m3u     ← Cleaned output playlist
+├── log.txt        ← Human-readable log
+└── log.csv        ← Structured data log
 ```
 
-> **Research Edition** is perfect for anyone wanting to dive deep—whether that’s instrumenting performance tests, training deep-learning models on scan logs, or teaching students how each component works.
+---
+
+## 🕒 Version History
+
+| Version | Highlights                                                                                  |
+|---------|--------------------------------------------------------------------------------------------|
+| 1.0     | Basic sequential scan, console output                                                      |
+| 1.1     | Interactive connectivity check, speed test, color UI                                       |
+| 1.2     | Geo-detection, improved redirect, duplicate filtering by resolution                        |
+| 1.3     | Research Edition: advanced UI, ultra-fast redirect, scan.log                               |
+| 1.4     | **Unified codebase, multi-threaded scanning, dual-format logging, modular architecture**   |
 
 ---
 
-## Version History & Improvements
-
-| Feature                  | Version 1.0                         | Version 1.1                                                        | Version 1.2                                                                                             | Version 1.3                                                                                                              |
-|--------------------------|-------------------------------------|--------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
-| Connectivity Check       | Single ping at startup              | Interactive re-check loop with detailed errors & countdown         | Continuous connectivity & 1 MB speed test + geo-detection                                               | Continuous check + geo-detection; auto-retry on failures, direct redirect resolution in 2–3 s                             |
-| Internet Speed Test      | Not available                       | Measures download speed using 1 MB file (Mbps)                     | Measures download speed + displays country code                                                         | Same as v1.2 (1 MB test)                                                                                                 |
-| Auto-Redirect            | Basic HTTP check                    | Basic redirection handling                                         | Improved HTTP 302 handling; updates channel URL to best stream                                          | Fetches final stream URLs in 2–3 s (vs. 22 s), boosting accuracy                                                         |
-| Resolution Conversion    | Extracts resolution from channel name| Parses manual tags; converts to p-labels                           | Dynamic dimensions → “480p”, “1080p”, “4K”                                                               | Real-time detection + standardized labels with improved accuracy                                                         |
-| Duplicate Handling       | Not available                       | Automatic removal by URL, keeping higher-quality streams           | Intelligent filtering: compares resolution & quality to retain best                                     | Same as v1.2, with integrated quality-based selection and `scan.log` details (Research Edition)                           |
-| UI Enhancements          | Plain ASCII bar                     | Colorized UI with spinner, timestamps & countdown                  | Refined banners, detailed progress indicators, improved countdown timers                                | Vibrant banners, dynamic progress bars, live ETA, timestamped/color-coded logs                                           |
-| VLC Launch Option        | Prompt at end                       | Retained with improved, colorized messaging                        | Integrated prompt to launch VLC                                                                         | Same as v1.2, with themed messages and confirmation logs                                                                  |
-| Terminal Window Check    | Not implemented                     | Warns if window too small                                          | Warns if window too small for full UI                                                                    | Same as v1.2                                                                                                              |
-| Built-In Logging         | Console only                        | Console only                                                       | Console + detailed summary                                                                              | `scan.log` in Research Edition with per-URL metrics, verbosity levels, retry/failure details                             |
-| Research Edition         | –                                   | –                                                                  | –                                                                                                       | ✔️ Fully modular source breakdown, academic comments & instrumentation hooks                                              |
-
----
-
-## Frequently Asked Questions
+## ❓ FAQ
 
 **Q: Can I rename the input/output files?**  
-A: In v1.3, they’re fixed as `input.txt` and `output.m3u`. You can modify the source code to change this.
+A: Filenames are hardcoded for simplicity. You can change them in the source code.
 
-**Q: How are redirects handled?**  
-A: On HTTP 302, the scanner parses the `Location:` header and follows it to the direct stream URL—resolving in 2–3 s instead of 22 s.
+**Q: How does multi-threading improve speed?**  
+A: Multiple channels are checked in parallel, dramatically reducing total scan time.
 
-**Q: What if my connection is unstable?**  
-A: The tool retries failed URL checks before marking a channel inactive.
-
-**Q: How does duplicate filtering work?**  
-A: Channels with identical URLs are compared by detected resolution; only the highest-quality entry is kept.
+**Q: What’s the difference between `log.txt` and `log.csv`?**  
+A: `log.txt` is for human review; `log.csv` is for data analysis (Excel, scripts).
 
 ---
 
-## Demo & UI Preview
+## ⚠️ Disclaimer
 
-**Test Demo (using Vietnamese IPTV list)**
-
-1. **Internet Measurement + Country + Scanning**  
-   ![Measurement & Scanning](https://github.com/user-attachments/assets/db99b502-15bf-41d3-b7a3-41050a834220)
-
-2. **Scan Summary + Duplicate Removal**  
-   ![Scan Summary](https://github.com/user-attachments/assets/9f8b971d-c228-452c-a288-fb6e9075ceea)
-   ![Scan Summary + Asking for VLC](https://github.com/user-attachments/assets/3bd7038c-88d8-44df-964a-683ad622cb15)
-
-3. **Asking to Open VLC (Optional)**  
-   ![VLC Launch Prompt](https://github.com/user-attachments/assets/ed21b368-da5c-4040-9ca0-30f4c6e80bc4)
-
-4. **`scan.log` Output (Research Edition)**  
-   ![Log File](https://github.com/user-attachments/assets/3898d5db-963f-4b64-8294-9db27adfdfbb)
+This tool is for **technical validation, education, and personal use only**.  
+- **No copyrighted or unauthorized content is provided or endorsed.**
+- Users are responsible for the legality of their playlists and streams.
+- For legal, public IPTV playlists, see [IPTV-org on GitHub](https://github.com/iptv-org/iptv).
 
 ---
 
-## License & Credits
+## 📝 License & Credits
 
-Developed by **ShouNLAK**  
-Open-source project · Educational & personal use only.  
-Contributions, bug reports, and pull requests are welcome.
+Developed by **ShouNLAK**.  
+Open-source for educational, research, and personal use.
 
-
-Can you edit it for me?
-
-And here is IPTV community: https://github.com/iptv-org/iptv
+Feel free to fork, adapt, and cite in your research.  
+Pull requests, issues, and academic citations are welcome!
