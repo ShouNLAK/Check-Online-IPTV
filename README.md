@@ -116,8 +116,8 @@ To grab the v1.3 - reseach edition and run it locally:
 # 1. Clone the repository
 git clone https://github.com/ShouNLAK/Check-Online-IPTV.git
 
-# 2. Enter the Version 1.2 folder
-cd Check-Online-IPTV/Version/"Check Online IPTV (Ver 1.3 - Research edition)"
+# 2. Enter the Version 1.4 folder
+cd Check-Online-IPTV/Version/"Check Online IPTV (Ver 1.4 - Research edition)"
 
 # 3. Compile the scanner
 gcc scanner.c -o IPTVScanner.exe
