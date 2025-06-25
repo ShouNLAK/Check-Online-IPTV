@@ -20,6 +20,8 @@
 <!-- Replace the placeholder below with your GIF -->
 <p align="center">
   <img src="demo.gif" alt="Live Demo of IPTV Channel Scanner" width="700"/>
+  
+  > *Reminder:* If the GIF not loaded, please watch it via Demo.gif
 </p>
 
 ---
